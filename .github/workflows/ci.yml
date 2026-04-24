@@ -15,8 +15,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-      - run: npm ci
+      # No cache: "npm" — template repo ships without a package-lock.json
+      # so each fork can generate its own; setup-node's cache needs the
+      # lockfile and fails otherwise. npm install (not ci) is used for
+      # the same reason.
+      - run: npm install --no-audit --no-fund
       - run: npm run lint --if-present
       - run: npm test
       - run: npm run build
