@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@lumo/agent-sdk": "github:Prasanth-Kalas/Lumo_Agent_SDK#v0.3.0",
+    "@lumo/agent-sdk": "github:Prasanth-Kalas/Lumo_Agent_SDK#0ebc7aff3beb09e88188d7270dfd26161983497f",
     "next": "^14.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

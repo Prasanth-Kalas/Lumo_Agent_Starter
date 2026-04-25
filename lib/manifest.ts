@@ -7,7 +7,7 @@
  * placeholders.
  *
  * CHANGE ME
- *   agent_id          → URL-safe slug, e.g. "acme.weather" or "hertz"
+ *   agent_id          → URL-safe slug, e.g. "acme-weather" or "hertz"
  *   display_name      → the pretty name shown in the marketplace
  *   one_liner         → one sentence explaining what you do
  *   intents           → keywords Lumo's router uses to find you
@@ -15,10 +15,13 @@
  *   pii_scope         → fields you need Lumo to send you per call
  */
 
-import type { AgentManifest } from "@lumo/agent-sdk";
+import { defineManifest } from "@lumo/agent-sdk";
+import { publicBaseUrl } from "./public-base-url";
 
-export const MANIFEST: AgentManifest = {
-  agent_id: "acme.weather",
+const base = publicBaseUrl();
+
+export const MANIFEST = defineManifest({
+  agent_id: "acme-weather",
   version: "0.1.0",
   domain: "weather",
   display_name: "Acme Weather",
@@ -29,9 +32,15 @@ export const MANIFEST: AgentManifest = {
     "will it rain in Chicago on Saturday",
     "temperature in Paris next weekend",
   ],
-  openapi_url: "/openapi.json",
+  openapi_url: `${base}/openapi.json`,
   ui: {
     components: [],
+  },
+  health_url: `${base}/api/health`,
+  sla: {
+    p50_latency_ms: 500,
+    p95_latency_ms: 1500,
+    availability_target: 0.99,
   },
   // "none" = public endpoint, no per-user auth. Flip to "oauth2" and
   // fill in the scopes block once you have a real user-scoped API.
@@ -44,9 +53,15 @@ export const MANIFEST: AgentManifest = {
   pii_scope: [],
   // Cancellation protocol. Return "ok" or "not_required" from your
   // cancel route; see /app/api/cancel/route.ts for the template.
-  on_call_escalation: "page",
+  requires_payment: false,
+  supported_regions: ["US"],
+  capabilities: {
+    sdk_version: "0.4.0",
+    supports_compound_bookings: false,
+    implements_cancellation: false,
+  },
   listing: {
     category: "Utility",
     pricing_note: "Free (fair use)",
   },
-};
+});

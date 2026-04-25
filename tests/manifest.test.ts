@@ -22,8 +22,9 @@ describe("manifest", () => {
     expect(() => parseManifest(MANIFEST)).not.toThrow();
   });
 
-  it("points to a relative openapi url (so per-env hosts still work)", () => {
-    expect(MANIFEST.openapi_url.startsWith("/")).toBe(true);
+  it("points to absolute contract urls", () => {
+    expect(() => new URL(MANIFEST.openapi_url)).not.toThrow();
+    expect(() => new URL(MANIFEST.health_url)).not.toThrow();
   });
 
   it("has at least one intent", () => {

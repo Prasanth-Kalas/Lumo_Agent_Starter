@@ -71,6 +71,14 @@ export default function Home() {
               /openapi.json
             </a>
           </li>
+          <li>
+            <a
+              href="/api/health"
+              style={{ color: "#5eeaac", textDecoration: "none" }}
+            >
+              /api/health
+            </a>
+          </li>
         </ul>
       </div>
 
